@@ -1,0 +1,21 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/Navbar/Navbar.astro";
+import ArticlesList from "@components/Blog/ArticlesList.astro";
+import Footer from "@components/Footer/Footer.astro";
+import { SITE } from "@data/copy";
+
+export const prerender = true;
+
+const pageTitle = `${SITE.meta.blog} | ${SITE.meta.brand}`;
+---
+
+<Layout title={pageTitle}>
+  <Navbar />
+
+  <main>
+    <ArticlesList />
+  </main>
+
+  <Footer />
+</Layout>

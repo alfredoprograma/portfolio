@@ -1,17 +1,26 @@
 ---
+import { cn } from "@utils/cn";
+
 export interface NavLinkProps {
   text: string;
   href: string;
+  active?: boolean;
 }
 
 type Props = NavLinkProps;
 
-const { href, text } = Astro.props;
+const { href, text, active = false } = Astro.props;
 ---
 
 <a
   href={href}
-  class="text-body hover:text-heading transition-colors"
+  aria-current={active ? "page" : undefined}
+  class={cn(
+    "relative text-sm font-medium transition-colors",
+    "after:absolute after:inset-x-0 after:-bottom-1.5 after:h-0.5 after:bg-accent-600 after:origin-left after:transition-transform after:duration-200 after:content-['']",
+    "hover:text-heading hover:after:scale-x-100",
+    active ? "text-heading after:scale-x-100" : "text-body after:scale-x-0"
+  )}
 >
   {text}
 </a>

@@ -1,14 +1,20 @@
 ---
 import ButtonLink from "@components/Button/ButtonLink.astro";
-import type { NavLinkProps } from "@components/Navbar/NavLink.astro";
-import type { UIStrings } from "@i18n/dictionaries";
+import Icon from "@components/Icon/Icon.astro";
+import SectionHeading from "@components/Section/SectionHeading.astro";
+import type { IconName } from "@components/Icon/Icon.astro";
+import type { SiteCopy } from "@data/copy";
 
-interface ContactLink extends NavLinkProps {
+interface ContactLink {
+  href: string;
+  text: string;
   download?: boolean;
+  featured?: boolean;
+  icon?: IconName;
 }
 
 interface ContactProps {
-  copy: UIStrings["contact"];
+  copy: SiteCopy["contact"];
   links: ContactLink[];
 }
 
@@ -17,37 +23,41 @@ type Props = ContactProps;
 const { copy, links } = Astro.props;
 ---
 
-<section id="contact" class="py-20 px-6 bg-neutral-100">
-  <div class="max-w-4xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-light text-heading mb-8">
-      {copy.title}
-    </h2>
-    <p class="text-lg text-body mb-8 max-w-2xl mx-auto leading-relaxed">
-      {copy.description}
-    </p>
-    <div
-      class="flex flex-col sm:flex-row gap-8 justify-center items-center mb-8"
-    >
+<section
+  id="contact"
+  class="scroll-mt-[102px] sm:scroll-mt-16 bg-white py-20 md:py-24 px-6"
+>
+  <div class="max-w-4xl mx-auto">
+    <SectionHeading
+      title={copy.title}
+      description={copy.description}
+      headingClass="text-[32px] md:text-[44px] leading-[1.08]"
+    />
+
+    <div class="flex flex-col sm:flex-row flex-wrap gap-3 mt-9 mb-8">
       {
-        links.map(({ href, text, download }) => (
-          <ButtonLink size="lg" href={href} download={download}>
+        links.map(({ href, text, download, featured, icon }) => (
+          <ButtonLink
+            href={href}
+            download={download}
+            size="lg"
+            variant={featured ? "fill" : "outline"}
+          >
             {text}
+            {icon && <Icon name={icon} size={15} />}
           </ButtonLink>
         ))
       }
     </div>
 
-    <div>
-      <p class="text-body max-w-2xl mx-auto leading-relaxed text-balance">
-        {copy.emailIntro}
-        {" "}
-        <a
-          href={`mailto:${copy.emailLinkText}`}
-          class="text-blue-600 hover:underline"
-        >
-          {copy.emailLinkText}
-        </a>
-      </p>
-    </div>
+    <p class="text-base leading-relaxed text-body">
+      {copy.emailIntro}{" "}
+      <a
+        href={`mailto:${copy.emailLinkText}`}
+        class="font-medium text-accent-700 underline-offset-[3px] hover:underline hover:text-accent-900 transition-colors"
+      >
+        {copy.emailLinkText}
+      </a>
+    </p>
   </div>
 </section>

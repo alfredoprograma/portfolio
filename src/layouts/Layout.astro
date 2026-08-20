@@ -1,20 +1,20 @@
 ---
-import "@fontsource/inter";
+import "@fontsource-variable/archivo";
+import "@fontsource-variable/public-sans";
+import "@fontsource-variable/jetbrains-mono";
 import "@styles/global.css";
-import type { Lang } from "@i18n/config";
 
 interface LayoutProps {
   title: string;
-  lang: Lang;
 }
 
 type Props = LayoutProps;
 
-const { title, lang } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -22,7 +22,7 @@ const { title, lang } = Astro.props;
     <title>{title}</title>
   </head>
 
-  <body class="font-inter">
+  <body class="font-sans antialiased bg-white text-body">
     <slot />
   </body>
 </html>

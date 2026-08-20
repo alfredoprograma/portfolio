@@ -1,19 +1,77 @@
 ---
-import { getCollection } from "astro:content";
-import { DEFAULT_LANG } from "@i18n/config";
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/Navbar/Navbar.astro";
+import Footer from "@components/Footer/Footer.astro";
+import Prose from "@components/Blog/Prose.astro";
+import Chip from "@components/Chip/Chip.astro";
+import ButtonLink from "@components/Button/ButtonLink.astro";
+import Icon from "@components/Icon/Icon.astro";
+import { getCollection, render } from "astro:content";
+import { SITE } from "@data/copy";
+import { formatDate } from "@utils/date";
+
 export const prerender = true;
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
 
-  return articles
-    .filter((article) => article.data.lang === DEFAULT_LANG)
-    .map((article) => ({
-      params: { id: article.data.canonicalSlug },
-      props: { slug: article.data.slug },
-    }));
+  return articles.map((article) => ({
+    params: { id: article.data.slug },
+    props: { article },
+  }));
 }
 
-const { slug } = Astro.props;
-return Astro.redirect(`/${DEFAULT_LANG}/blog/${slug}`, 308);
+const { article } = Astro.props;
+const { Content } = await render(article);
+const pageTitle = `${article.data.title} | ${SITE.meta.blog} | ${SITE.meta.brand}`;
 ---
+
+<Layout title={pageTitle}>
+  <Navbar />
+
+  <main class="px-6 pt-14 pb-20 md:pt-18 md:pb-24">
+    <div class="max-w-[704px] mx-auto">
+      <a
+        href="/blog"
+        class="inline-flex items-center gap-2 mb-8 text-[13px] font-medium text-muted hover:text-accent-700 transition-colors"
+      >
+        <Icon name="arrow-left" size={14} />
+        {SITE.post.backToBlog}
+      </a>
+
+      <header class="pb-8 mb-12 border-b border-neutral-200">
+        <time
+          class="block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted mb-3.5"
+          datetime={article.data.date.toISOString()}
+        >
+          {formatDate(article.data.date)}
+        </time>
+
+        <h1
+          class="font-display text-[32px] md:text-[46px] leading-[1.08] tracking-[-0.035em] font-semibold text-heading mb-6 text-balance"
+        >
+          {article.data.title}
+        </h1>
+
+        <div class="w-14 h-[3px] bg-accent-600 mb-6"></div>
+
+        <div class="flex flex-wrap gap-2">
+          {article.data.tags.map((text) => <Chip>{text}</Chip>)}
+        </div>
+      </header>
+
+      <Prose>
+        <Content />
+      </Prose>
+
+      <div class="mt-14 pt-8 border-t border-neutral-200">
+        <ButtonLink href="/blog" variant="outline" size="lg">
+          <Icon name="arrow-left" size={15} />
+          {SITE.post.backToBlog}
+        </ButtonLink>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

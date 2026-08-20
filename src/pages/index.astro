@@ -1,6 +1,32 @@
 ---
-import { DEFAULT_LANG } from "@i18n/config";
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/Navbar/Navbar.astro";
+import Hero from "@components/Hero/Hero.astro";
+import Experience from "@components/Experience/Experience.astro";
+import Contact from "@components/Contact/Contact.astro";
+import Footer from "@components/Footer/Footer.astro";
+import { SITE, SOCIAL_LINKS, RESUME_PATH } from "@data/copy";
+
 export const prerender = true;
 
-return Astro.redirect(`/${DEFAULT_LANG}`, 308);
+const pageTitle = `${SITE.meta.home} | ${SITE.meta.brand}`;
+
+const contactLinks = [
+  { ...SOCIAL_LINKS[0], featured: true, icon: "arrow-up-right" as const },
+  { ...SOCIAL_LINKS[1], icon: "arrow-up-right" as const },
+  {
+    href: RESUME_PATH,
+    text: SITE.contact.resumeCta,
+    download: true,
+    icon: "download" as const,
+  },
+];
 ---
+
+<Layout title={pageTitle}>
+  <Navbar />
+  <Hero />
+  <Experience copy={SITE.experience} />
+  <Contact copy={SITE.contact} links={contactLinks} />
+  <Footer />
+</Layout>

@@ -1,112 +1,69 @@
 ---
 import type { NavLinkProps } from "./NavLink.astro";
 import NavLink from "./NavLink.astro";
-import { getCollection } from "astro:content";
-import { SUPPORTED_LANGS, createLangHref, type Lang } from "@i18n/config";
-import type { UIStrings } from "@i18n/dictionaries";
+import ButtonLink from "@components/Button/ButtonLink.astro";
+import { cn } from "@utils/cn";
+import { SITE } from "@data/copy";
 
-interface NavbarProps {
-  lang: Lang;
-  nav: UIStrings["nav"];
-}
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const isBlogRoute = pathname.startsWith("/blog");
+const isHomeRoute = pathname === "/";
 
-type Props = NavbarProps;
-
-const { lang, nav } = Astro.props;
-
-const articles = await getCollection("articles");
-
-const slugToCanonicalByLang = Object.fromEntries(
-  SUPPORTED_LANGS.map((code) => [code, {} as Record<string, string>])
-) as Record<Lang, Record<string, string>>;
-
-const canonicalToSlug: Record<string, Partial<Record<Lang, string>>> = {};
-
-for (const article of articles) {
-  const { canonicalSlug, slug } = article.data;
-  const articleLang = article.data.lang as Lang;
-
-  slugToCanonicalByLang[articleLang][slug] = canonicalSlug;
-  (canonicalToSlug[canonicalSlug] ??= {})[articleLang] = slug;
-}
+const CONTACT_HREF = "/#contact";
 
 const navLinks: NavLinkProps[] = [
-  {
-    href: createLangHref(lang, "#about"),
-    text: nav.about,
-  },
-  {
-    href: createLangHref(lang, "/blog"),
-    text: nav.blog,
-  },
-  {
-    href: createLangHref(lang, "#contact"),
-    text: nav.contact,
-  },
+  { href: "/#about", text: SITE.nav.about, active: isHomeRoute },
+  { href: "/blog", text: SITE.nav.blog, active: isBlogRoute },
 ];
-
-const { pathname, search, hash } = Astro.url;
-const segments = pathname.split("/").filter(Boolean);
-const currentLangSegment = segments[0];
-const remainderSegments = segments.slice(currentLangSegment ? 1 : 0);
-const remainder = remainderSegments.join("/");
-
-function getLanguageHref(targetLang: Lang) {
-  if (!remainder) {
-    return `/${targetLang}`;
-  }
-
-  if (remainderSegments[0] === "blog" && remainderSegments.length > 1) {
-    const currentSlug = remainderSegments[1]!;
-    const canonical = slugToCanonicalByLang[lang]?.[currentSlug];
-
-    if (canonical) {
-      const targetSlug = canonicalToSlug[canonical]?.[targetLang];
-
-      if (targetSlug) {
-        const targetPath = `/${targetLang}/blog/${targetSlug}`;
-        return `${targetPath}${search}${hash}`;
-      }
-
-      return `/${targetLang}/blog${search}${hash}`;
-    }
-  }
-
-  const basePath = `/${targetLang}/${remainder}`;
-  return `${basePath}${search}${hash}`;
-}
 ---
 
 <header
-  class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-neutral-200 z-50"
+  class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-neutral-200"
 >
-  <nav class="max-w-4xl mx-auto px-6 py-4">
-    <div
-      class="flex flex-col items-center gap-4 sm:flex-row sm:justify-between"
-    >
-      <div class="flex justify-center items-center gap-6">
+  <div
+    class="max-w-4xl mx-auto px-6 h-14 sm:h-16 flex items-center justify-between gap-6"
+  >
+    <a href="/" class="flex items-center gap-2.5 text-heading no-underline">
+      <span class="block size-2.5 bg-accent-600"></span>
+      <span class="font-display text-[15px] font-semibold tracking-[-0.01em]">
+        {SITE.meta.brand}
+      </span>
+    </a>
+
+    <div class="hidden sm:flex items-center gap-8">
+      <div class="flex items-center gap-7">
         {navLinks.map((props) => <NavLink {...props} />)}
       </div>
 
-      <div
-        class="flex items-center gap-2 text-sm text-muted uppercase tracking-wide"
-        aria-label={nav.languageSwitcherLabel}
-      >
-        {
-          SUPPORTED_LANGS.map((code) => (
-            <a
-              href={getLanguageHref(code)}
-              class={
-                code === lang
-                  ? "text-heading font-semibold"
-                  : "hover:text-heading transition-colors"
-              }
-            >
-              {code.toUpperCase()}
-            </a>
-          ))
-        }
-      </div>
+      <ButtonLink href={CONTACT_HREF} size="sm">
+        {SITE.nav.contact}
+      </ButtonLink>
     </div>
+  </div>
+
+  <nav class="grid grid-cols-3 border-t border-neutral-200 sm:hidden">
+    {
+      navLinks.map(({ href, text, active }) => (
+        <a
+          href={href}
+          aria-current={active ? "page" : undefined}
+          class={cn(
+            "flex items-center justify-center min-h-[46px] text-[13px] no-underline transition-colors",
+            active
+              ? "font-semibold text-heading border-b-2 border-accent-600"
+              : "font-medium text-muted border-b-2 border-transparent"
+          )}
+        >
+          {text}
+        </a>
+      ))
+    }
+
+    <a
+      href={CONTACT_HREF}
+      class="flex items-center justify-center min-h-[46px] bg-accent-600 text-white text-[13px] font-semibold no-underline transition-colors active:bg-accent-700"
+    >
+      {SITE.nav.contact}
+    </a>
   </nav>
 </header>

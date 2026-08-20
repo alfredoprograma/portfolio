@@ -1,7 +1,5 @@
 ---
-lang: "en"
 slug: "spinning-up-kafka-producers-and-consumers"
-canonicalSlug: "spinning-up-kafka"
 title: "Setting up a Kafka event broker with producers and consumers"
 date: "2025-10-09"
 excerpt: "Learn the fundamentals of event streaming with Kafka and how to build producers and consumers in Go."

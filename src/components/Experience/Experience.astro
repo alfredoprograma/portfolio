@@ -1,8 +1,10 @@
 ---
-import type { UIStrings } from "@i18n/dictionaries";
+import { cn } from "@utils/cn";
+import SectionHeading from "@components/Section/SectionHeading.astro";
+import type { SiteCopy } from "@data/copy";
 
 interface ExperienceProps {
-  copy: UIStrings["experience"];
+  copy: SiteCopy["experience"];
 }
 
 type Props = ExperienceProps;
@@ -10,47 +12,82 @@ type Props = ExperienceProps;
 const { copy } = Astro.props;
 ---
 
-<section id="experience" class="py-20 px-6 bg-neutral-100">
+<section
+  id="experience"
+  class="scroll-mt-[102px] sm:scroll-mt-16 bg-neutral-50 border-y border-neutral-200 py-20 md:py-24 px-6"
+>
   <div class="max-w-4xl mx-auto">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-light text-heading mb-4">
-        {copy.title}
-      </h2>
-      <p class="text-lg text-body max-w-2xl mx-auto leading-relaxed">
-        {copy.subtitle}
-      </p>
-    </div>
+    <SectionHeading
+      title={copy.title}
+      description={copy.subtitle}
+      class="mb-12 md:mb-16"
+    />
 
-    <div class="space-y-8">
+    <div>
       {
-        copy.positions.map((position) => (
-          <article class="bg-white border border-neutral-200 rounded-sm p-8 shadow-sm ">
-            <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-1">
-              <div>
-                <h3 class="text-2xl font-medium text-heading">
-                  {position.role}
-                </h3>
-                <p class="text-muted text-sm uppercase tracking-wide">
-                  {position.company}
-                </p>
-              </div>
-              <p class="text-xs text-muted font-medium uppercase tracking-wide">
-                {position.period}
+        copy.companies.map((company) => (
+          <div class="grid gap-4 md:grid-cols-[168px_minmax(0,1fr)] md:gap-10">
+            <div class="md:pt-0.5">
+              <p class="font-display text-lg tracking-[-0.02em] font-semibold text-heading">
+                {company.company}
               </p>
-            </header>
-
-            <div class="mt-6 space-y-4">
-              {position.highlights.length > 0 && (
-                <ul class="list-disc pl-5 space-y-2 text-body leading-relaxed marker:text-neutral-400">
-                  {position.highlights.map((highlight) => (
-                    <li>{highlight}</li>
-                  ))}
-                </ul>
-              )}
+              <p class="mt-1.5 md:mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+                {company.period}
+              </p>
             </div>
-          </article>
+
+            <div class="relative border-l border-neutral-200 pl-6 md:pl-10 pb-10 md:pb-13">
+              {company.roles.map((role, index) => (
+                <div
+                  class={cn(
+                    index > 0 &&
+                      "mt-7 md:mt-9 pt-6 md:pt-8 border-t border-dashed border-neutral-200"
+                  )}
+                >
+                  <div class="relative">
+                    <span
+                      class={cn(
+                        "absolute block -left-[27px] md:-left-[43px]",
+                        index === 0
+                          ? "top-2 size-[7px] bg-accent-600"
+                          : "top-[9px] size-[5px] bg-white border border-accent-600"
+                      )}
+                    />
+
+                    <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 sm:gap-6 mb-4 md:mb-[18px]">
+                      <h3 class="font-display text-xl md:text-[23px] leading-[1.25] tracking-[-0.03em] font-semibold text-heading">
+                        {role.role}
+                      </h3>
+                      {company.roles.length > 1 && (
+                        <p class="shrink-0 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+                          {role.period}
+                        </p>
+                      )}
+                    </div>
+
+                    <ul class="flex flex-col gap-3 text-[15px] md:text-base leading-relaxed text-body">
+                      {role.highlights.map((highlight) => (
+                        <li class="relative pl-5 before:absolute before:left-0 before:top-[10px] before:size-[5px] before:bg-accent-600 before:content-['']">
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         ))
       }
+
+      <div class="grid md:grid-cols-[168px_minmax(0,1fr)] md:gap-10">
+        <div class="hidden md:block"></div>
+        <div class="relative h-0 border-l border-neutral-200">
+          <span
+            class="absolute -left-[3px] -top-[3px] block size-[5px] bg-neutral-300"
+          ></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>

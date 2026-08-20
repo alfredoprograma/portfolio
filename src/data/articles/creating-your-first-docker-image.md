@@ -1,7 +1,5 @@
 ---
-lang: "en"
 slug: "creating-your-first-docker-image"
-canonicalSlug: "creating-your-first-docker-image"
 title: "Create your first Docker image"
 date: "2025-10-20"
 excerpt: "Learn how to containerize your application by building your first Docker image."

@@ -1,32 +1,84 @@
 ---
 import ButtonLink from "@components/Button/ButtonLink.astro";
-import type { UIStrings } from "@i18n/dictionaries";
+import Icon from "@components/Icon/Icon.astro";
+import { SITE } from "@data/copy";
 
-interface HeroProps {
-  copy: UIStrings["hero"];
-}
+const copy = SITE.hero;
 
-type Props = HeroProps;
-
-const { copy } = Astro.props;
+// The role held right now, read straight off the experience data rather than
+// duplicated here, so it cannot drift when a new role is added.
+const currentCompany = SITE.experience.companies[0];
+const currentRole = currentCompany.roles[0];
 ---
 
 <section
   id="about"
-  class="min-h-screen flex items-center justify-center px-6 pt-14"
+  class="scroll-mt-[102px] sm:scroll-mt-16 flex flex-col min-h-[calc(100svh-var(--header-height))] px-6 py-10 md:py-12"
 >
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-5xl md:text-7xl font-light text-heading mb-4 leading-tight">
-      {copy.name}
-    </h1>
-    <p class="text-xl md:text-3xl text-body mb-8 font-light underline">
-      {copy.role}
-    </p>
-    <p class="text-lg text-body max-w-2xl mx-auto leading-relaxed mb-12">
-      {copy.description}
-    </p>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <ButtonLink href="#contact" size="lg"> {copy.cta} </ButtonLink>
+  <div class="flex-1 flex items-center">
+    <div class="w-full max-w-4xl mx-auto">
+      <div class="flex items-center gap-3 mb-6 md:mb-8">
+        <span class="block size-[7px] shrink-0 bg-accent-600"></span>
+        <p
+          class="text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-accent-700"
+        >
+          {copy.role}
+        </p>
+      </div>
+
+      <h1
+        class="font-display text-[clamp(2.75rem,8.5vw,6.5rem)] leading-[0.95] tracking-[-0.015em] font-semibold text-heading"
+      >
+        {copy.name}
+      </h1>
+
+      <div class="w-20 h-[3px] bg-accent-600 my-7 md:my-9"></div>
+
+      <p class="max-w-[620px] text-base md:text-lg leading-[1.72] text-body">
+        {copy.description}
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 mt-9 md:mt-11">
+        <ButtonLink href="#contact" size="lg">
+          {copy.cta}
+          <Icon name="arrow-right" size={15} />
+        </ButtonLink>
+        <ButtonLink href="/blog" variant="outline" size="lg">
+          {copy.secondaryCta}
+        </ButtonLink>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full max-w-4xl mx-auto">
+    <div
+      class="flex items-end justify-between gap-6 border-t border-neutral-200 pt-5"
+    >
+      <div>
+        <p
+          class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted mb-1.5"
+        >
+          {copy.currentlyLabel}
+        </p>
+        <p class="text-sm text-body">
+          <span class="font-medium text-heading">{currentRole.role}</span>
+          <span class="text-muted"> &middot; </span>
+          {currentCompany.company}
+        </p>
+      </div>
+
+      <a
+        href="#experience"
+        aria-label={copy.scrollCue}
+        class="group hidden sm:flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted hover:text-accent-700 transition-colors"
+      >
+        {copy.scrollCue}
+        <span
+          class="flex size-9 items-center justify-center border border-neutral-200 rounded-xs transition-all duration-200 group-hover:bg-accent-600 group-hover:border-accent-600 group-hover:text-white group-hover:translate-y-0.5"
+        >
+          <Icon name="arrow-down" size={15} />
+        </span>
+      </a>
     </div>
   </div>
 </section>

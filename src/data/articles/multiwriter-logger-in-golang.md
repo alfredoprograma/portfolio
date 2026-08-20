@@ -1,7 +1,5 @@
 ---
-lang: "en"
 slug: "multiwriter-logger-in-golang"
-canonicalSlug: "multiwriter-logger-in-golang"
 title: "How to Implement a MultiWriter logger in Golang"
 date: "2025-11-05"
 excerpt: "Learn step by step how to create a MultiWriter logger in Golang to write logs to multiple destinations simultaneously using slog."

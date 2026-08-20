@@ -1,13 +1,7 @@
-const formatterCache = new Map<string, Intl.DateTimeFormat>();
+const DATE_LOCALE = "en-US";
 
-function getFormatter(locale: string) {
-  if (!formatterCache.has(locale)) {
-    formatterCache.set(locale, new Intl.DateTimeFormat(locale, { dateStyle: "long" }));
-  }
+const formatter = new Intl.DateTimeFormat(DATE_LOCALE, { dateStyle: "long" });
 
-  return formatterCache.get(locale)!;
-}
-
-export function formatDate(date: Date, locale: string) {
-  return getFormatter(locale).format(date);
+export function formatDate(date: Date) {
+  return formatter.format(date);
 }

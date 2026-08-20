@@ -1,0 +1,35 @@
+---
+export type IconName = "arrow-right" | "arrow-left" | "arrow-up-right" | "arrow-down" | "download";
+
+interface IconProps {
+  name: IconName;
+  size?: number;
+  class?: string;
+}
+
+type Props = IconProps;
+
+const PATHS: Record<IconName, string[]> = {
+  "arrow-right": ["M3 8h10", "M9 4l4 4-4 4"],
+  "arrow-left": ["M13 8H3", "M7 4L3 8l4 4"],
+  "arrow-up-right": ["M5 11L11 5", "M6 5h5v5"],
+  "arrow-down": ["M8 3v10", "M4 9l4 4 4-4"],
+  download: ["M8 3v8", "M4.5 7.5L8 11l3.5-3.5", "M3 13h10"],
+};
+
+const { name, size = 16, class: className } = Astro.props;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.6"
+  stroke-linecap="square"
+  aria-hidden="true"
+  class={className}
+>
+  {PATHS[name].map((d) => <path d={d} />)}
+</svg>

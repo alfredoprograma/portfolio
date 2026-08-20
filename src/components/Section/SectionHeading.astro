@@ -1,0 +1,43 @@
+---
+import { cn } from "@utils/cn";
+
+interface SectionHeadingProps {
+  title: string;
+  description?: string;
+  as?: "h1" | "h2";
+  /** Type scale for the heading; defaults to the 40px section size. */
+  headingClass?: string;
+  class?: string;
+}
+
+type Props = SectionHeadingProps;
+
+const {
+  title,
+  description,
+  as: Tag = "h2",
+  headingClass = "text-3xl md:text-[40px] leading-[1.12]",
+  class: className,
+} = Astro.props;
+---
+
+<div class={className}>
+  <div class="w-18 h-[3px] bg-accent-600 mb-6 md:mb-[26px]"></div>
+
+  <Tag
+    class={cn(
+      "font-display tracking-[-0.035em] font-semibold text-heading",
+      headingClass
+    )}
+  >
+    {title}
+  </Tag>
+
+  {
+    description && (
+      <p class="max-w-[620px] text-base md:text-[17px] leading-relaxed text-body mt-5">
+        {description}
+      </p>
+    )
+  }
+</div>
