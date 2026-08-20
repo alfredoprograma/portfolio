@@ -9,6 +9,8 @@ const articles = defineCollection({
     excerpt: z.string(),
     tags: z.array(z.string()),
     date: z.coerce.date(),
+    // Optional; feeds dateModified in JSON-LD and article:modified_time.
+    updatedDate: z.coerce.date().optional(),
   })
 })
 

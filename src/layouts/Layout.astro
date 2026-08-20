@@ -3,14 +3,48 @@ import "@fontsource-variable/archivo";
 import "@fontsource-variable/public-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "@styles/global.css";
+// ?url resolves to the hashed emitted asset, so the preload survives font
+// package upgrades instead of pinning a build hash.
+import archivoWoff2 from "@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2?url";
+import { SITE } from "@data/copy";
+import { SEO } from "@data/seo";
+import { OG_HEIGHT, OG_WIDTH } from "@utils/og";
 
 interface LayoutProps {
   title: string;
+  description: string;
+  /** Social-card headline. Defaults to `title`, but pass the bare title where
+      `title` carries a brand suffix — og:site_name already states the brand. */
+  ogTitle?: string;
+  /** Site-relative path to the generated card, e.g. "/og/blog/slug.png". */
+  ogImage?: string;
+  type?: "website" | "article";
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  tags?: readonly string[];
+  noindex?: boolean;
+  jsonLd?: object;
 }
 
 type Props = LayoutProps;
 
-const { title } = Astro.props;
+const {
+  title,
+  description,
+  ogTitle = Astro.props.title,
+  ogImage = "/og/home.png",
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  tags = [],
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+// Astro.site comes from astro.config.mjs; these must be absolute or crawlers
+// and social scrapers drop them.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -19,7 +53,88 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={SEO.author.name} />
+    {/* A canonical on a noindex page sends conflicting signals, so skip it. */}
+    {noindex
+      ? <meta name="robots" content="noindex, follow" />
+      : <link rel="canonical" href={canonical} />}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={SITE.meta.brand} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={SEO.locale} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    {/* LinkedIn and Slack lay the card out before the image loads; without
+        explicit dimensions they fall back to a small square thumbnail. */}
+    <meta property="og:image:width" content={String(OG_WIDTH)} />
+    <meta property="og:image:height" content={String(OG_HEIGHT)} />
+    <meta property="og:image:alt" content={ogTitle} />
+
+    {
+      type === "article" && (
+        <>
+          <meta property="article:author" content={SEO.author.name} />
+          {publishedTime && (
+            <meta
+              property="article:published_time"
+              content={publishedTime.toISOString()}
+            />
+          )}
+          {modifiedTime && (
+            <meta
+              property="article:modified_time"
+              content={modifiedTime.toISOString()}
+            />
+          )}
+          {tags.map((tag) => <meta property="article:tag" content={tag} />)}
+        </>
+      )
+    }
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogTitle} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content={SEO.themeColor} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.meta.blog} | ${SITE.meta.brand}`}
+      href={new URL("/rss.xml", Astro.site).href}
+    />
+
+    {/* Archivo carries the h1 on every page, so preloading it cuts LCP. */}
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={archivoWoff2}
+      crossorigin
+    />
+
+    {
+      jsonLd && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(jsonLd)}
+        />
+      )
+    }
   </head>
 
   <body class="font-sans antialiased bg-white text-body">

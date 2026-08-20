@@ -1,0 +1,50 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/Navbar/Navbar.astro";
+import Footer from "@components/Footer/Footer.astro";
+import SectionHeading from "@components/Section/SectionHeading.astro";
+import ButtonLink from "@components/Button/ButtonLink.astro";
+import Icon from "@components/Icon/Icon.astro";
+import { SITE } from "@data/copy";
+
+export const prerender = true;
+
+const pageTitle = `Page not found | ${SITE.meta.brand}`;
+---
+
+<Layout
+  title={pageTitle}
+  description="The page you were looking for doesn't exist."
+  noindex
+>
+  <Navbar />
+
+  <main class="px-6 pt-14 pb-20 md:pt-18 md:pb-24">
+    <div class="mx-auto max-w-[704px]">
+      <p
+        class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted mb-3.5"
+      >
+        Error 404
+      </p>
+
+      <SectionHeading
+        title="This page doesn't exist"
+        description="The link may be outdated or the address mistyped. Head back home or browse the blog instead."
+        as="h1"
+      />
+
+      <div class="flex flex-wrap gap-3 mt-10">
+        <ButtonLink href="/" size="lg">
+          <Icon name="arrow-left" size={15} />
+          Back home
+        </ButtonLink>
+        <ButtonLink href="/blog" variant="outline" size="lg">
+          {SITE.nav.blog}
+          <Icon name="arrow-right" size={15} />
+        </ButtonLink>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

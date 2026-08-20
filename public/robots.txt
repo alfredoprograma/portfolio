@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# /en/* are 308 redirect stubs and already carry noindex. Deliberately not
+# disallowed: crawlers need to follow them to consolidate the old URLs.
+
+Sitemap: https://alfredoprograma.dev/sitemap-index.xml

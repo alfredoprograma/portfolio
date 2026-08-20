@@ -5,7 +5,9 @@
 - Shared UI lives in `src/components`, while cross-page layouts are under `src/layouts`.
 - Markdown content is loaded from `src/data/articles` via the content collection defined in `src/content.config.ts`.
 - Tailwind-first styles and tokens sit in `src/styles`; lightweight utilities and helpers belong in `src/utils`.
-- Static assets go in `public`, and language resources live in `src/i18n`.
+- Static assets go in `public` (favicons, `robots.txt`, the web manifest, the CV).
+- SEO lives in two places: `src/data/seo.ts` holds the constants (canonical origin, brand colours, author) and `src/utils/seo.ts` builds the JSON-LD. Pages pass metadata to `src/layouts/Layout.astro`, which owns every tag in `<head>`.
+- Open Graph cards are generated at build time by `src/pages/og/[...route].png.ts` via `src/utils/og.ts`; add a route there whenever you add a page that should be shareable. Satori cannot read WOFF2, so it uses the static TTFs in `src/assets/fonts`.
 
 ## Build, Test, and Development Commands
 - `npm install` to sync dependencies after cloning or updating branches.
@@ -24,6 +26,8 @@
 - Automated tests are not yet in place; at minimum run `npm run build` and `npm run preview` to catch runtime regressions.
 - When adding tests, align filenames with the feature under test (e.g., `Hero.test.ts`) and colocate them near the source or under a future `tests/` folder.
 - Ensure content additions include frontmatter that satisfies the schema in `src/content.config.ts`.
+- After a content or metadata change, check the generated cards in `dist/og/`: satori fails silently on a missing glyph, so a broken font renders blank boxes rather than erroring.
+- Regenerate favicons with `node scripts/generate-icons.mjs` after editing `public/favicon.svg`.
 
 ## Commit & Pull Request Guidelines
 - Commit history follows a Conventional Commits style (`feature:`, `fix:`, `feat:`). Keep messages concise: `<type>: <summary>`.

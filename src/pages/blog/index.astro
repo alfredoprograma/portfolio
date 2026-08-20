@@ -4,13 +4,29 @@ import Navbar from "@components/Navbar/Navbar.astro";
 import ArticlesList from "@components/Blog/ArticlesList.astro";
 import Footer from "@components/Footer/Footer.astro";
 import { SITE } from "@data/copy";
+import { ogImagePath } from "@data/seo";
+import { blogSchema, breadcrumbSchema, graph } from "@utils/seo";
 
 export const prerender = true;
 
 const pageTitle = `${SITE.meta.blog} | ${SITE.meta.brand}`;
+
+const jsonLd = graph(
+  blogSchema(),
+  breadcrumbSchema([
+    { name: SITE.meta.home, path: "/" },
+    { name: SITE.meta.blog, path: "/blog" },
+  ]),
+);
 ---
 
-<Layout title={pageTitle}>
+<Layout
+  title={pageTitle}
+  ogTitle={`${SITE.meta.blog} | ${SITE.hero.name}`}
+  description={SITE.blogList.description}
+  ogImage={ogImagePath("blog")}
+  jsonLd={jsonLd}
+>
   <Navbar />
 
   <main>

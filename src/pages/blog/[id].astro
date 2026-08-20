@@ -9,6 +9,8 @@ import ButtonLink from "@components/Button/ButtonLink.astro";
 import Icon from "@components/Icon/Icon.astro";
 import { getCollection, render } from "astro:content";
 import { SITE } from "@data/copy";
+import { ogImagePath } from "@data/seo";
+import { blogPostingSchema, breadcrumbSchema, graph } from "@utils/seo";
 import { formatDate } from "@utils/date";
 
 export const prerender = true;
@@ -25,10 +27,32 @@ export async function getStaticPaths() {
 const { article } = Astro.props;
 const { Content, headings } = await render(article);
 const toc = headings.filter(({ depth }) => depth === 2 || depth === 3);
-const pageTitle = `${article.data.title} | ${SITE.meta.blog} | ${SITE.meta.brand}`;
+// Drops the redundant "Blog" segment; the old three-part title ran past the
+// length Google shows in a result.
+const pageTitle = `${article.data.title} | ${SITE.meta.brand}`;
+const ogImage = ogImagePath(`blog/${article.data.slug}`);
+
+const jsonLd = graph(
+  blogPostingSchema(article, ogImage),
+  breadcrumbSchema([
+    { name: SITE.meta.home, path: "/" },
+    { name: SITE.meta.blog, path: "/blog" },
+    { name: article.data.title, path: `/blog/${article.data.slug}` },
+  ]),
+);
 ---
 
-<Layout title={pageTitle}>
+<Layout
+  title={pageTitle}
+  ogTitle={article.data.title}
+  description={article.data.excerpt}
+  ogImage={ogImage}
+  type="article"
+  publishedTime={article.data.date}
+  modifiedTime={article.data.updatedDate ?? article.data.date}
+  tags={article.data.tags}
+  jsonLd={jsonLd}
+>
   <Navbar />
 
   <main class="px-6 pt-14 pb-20 md:pt-18 md:pb-24">

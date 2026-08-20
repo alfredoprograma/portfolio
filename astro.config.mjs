@@ -1,10 +1,19 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://alfredoprograma.dev',
+  integrations: [
+    sitemap({
+      // /en/* are 308 redirect stubs from the bilingual era; keep them
+      // reachable for link equity but never advertise them as canonical.
+      filter: (page) => !page.includes('/en/'),
+    }),
+  ],
   markdown: {
     shikiConfig: {
       theme: 'github-dark-default',
