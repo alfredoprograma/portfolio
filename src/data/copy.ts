@@ -108,6 +108,7 @@ export const SITE = {
   },
   post: {
     backToBlog: "Back to blog",
+    onThisPage: "On this page",
   },
 } as const;
 

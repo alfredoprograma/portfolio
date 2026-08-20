@@ -1,0 +1,189 @@
+---
+import type { MarkdownHeading } from "astro";
+import Icon from "@components/Icon/Icon.astro";
+import { cn } from "@utils/cn";
+import { SITE } from "@data/copy";
+
+interface Props {
+  headings: MarkdownHeading[];
+  variant: "sidebar" | "inline";
+}
+
+const { headings, variant } = Astro.props;
+
+// A single-section article gains nothing from an index.
+const show = headings.length > 1;
+
+const linkClass = (depth: number) =>
+  cn(
+    "block py-1.5 pr-3 rounded-r-xs border-l-2 border-neutral-200",
+    "text-[13px] leading-[1.5] text-muted no-underline transition-colors",
+    "hover:text-heading hover:bg-neutral-50 hover:border-neutral-400",
+    "aria-[current=location]:bg-neutral-100 aria-[current=location]:font-medium",
+    "aria-[current=location]:text-neutral-900 aria-[current=location]:border-accent-600",
+    depth > 2 ? "pl-6" : "pl-3"
+  );
+---
+
+{
+  show && variant === "sidebar" && (
+    <aside class="hidden lg:block">
+      <nav
+        aria-label={SITE.post.onThisPage}
+        class="sticky top-[calc(var(--header-height)+2rem)] max-h-[calc(100vh-var(--header-height)-4rem)] overflow-y-auto"
+      >
+        <p class="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+          {SITE.post.onThisPage}
+        </p>
+
+        <ul class="list-none m-0 p-0">
+          {headings.map(({ slug, depth, text }) => (
+            <li>
+              <a href={`#${slug}`} data-toc-link class={linkClass(depth)}>
+                {text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+  )
+}
+
+{
+  show && variant === "inline" && (
+    <details
+      data-toc-details
+      class="group lg:hidden mb-12 border border-neutral-200 rounded-xs"
+    >
+      <summary class="flex items-center justify-between gap-3 px-4 py-3 list-none cursor-pointer [&::-webkit-details-marker]:hidden">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+          {SITE.post.onThisPage}
+        </span>
+
+        <Icon
+          name="arrow-down"
+          size={14}
+          class="shrink-0 text-muted transition-transform group-open:rotate-180"
+        />
+      </summary>
+
+      <ul class="list-none m-0 px-4 pb-3 pt-1">
+        {headings.map(({ slug, depth, text }) => (
+          <li>
+            <a href={`#${slug}`} data-toc-link class={linkClass(depth)}>
+              {text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+<script>
+  // Astro hoists this into a single bundled module, so it runs once even though
+  // the component is rendered twice (sidebar + inline). Both copies share the
+  // same slugs, so updating by href hash keeps them in sync.
+  const links = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>("a[data-toc-link]")
+  );
+
+  const slugs = Array.from(
+    new Set(links.map((link) => link.getAttribute("href")!.slice(1)))
+  );
+
+  const headings = slugs
+    .map((slug) => document.getElementById(slug))
+    .filter((el): el is HTMLElement => el !== null);
+
+  if (headings.length > 0) {
+    // The reading line has to sit just below where an anchor jump parks a
+    // heading, otherwise clicking a link highlights the *previous* section:
+    // the heading lands exactly on the line and subpixel scroll rounding
+    // decides the winner. Read the offset back from the stylesheet
+    // (.prose h2 scroll-margin-top) so the two can never drift apart, then
+    // add a few pixels of slack.
+    let line = 0;
+
+    function measure() {
+      const fallback =
+        (parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--header-height"
+          )
+        ) || 0) + 24;
+
+      const margin = parseFloat(getComputedStyle(headings[0]).scrollMarginTop);
+
+      line = (Number.isFinite(margin) ? margin : fallback) + 4;
+    }
+
+    function activeSlug() {
+      // Bottom of the page: the last section wins even if it never crosses the
+      // reading line, which short trailing sections otherwise never would.
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2;
+
+      if (atBottom) return headings[headings.length - 1]?.id ?? null;
+
+      let current: string | null = null;
+
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top > line) break;
+        current = heading.id;
+      }
+
+      // Still in the intro — nothing highlighted rather than a false positive.
+      return current;
+    }
+
+    function sync() {
+      const active = activeSlug();
+
+      for (const link of links) {
+        if (link.getAttribute("href") === `#${active}`) {
+          link.setAttribute("aria-current", "location");
+        } else {
+          link.removeAttribute("aria-current");
+        }
+      }
+    }
+
+    let queued = false;
+
+    function onScroll() {
+      if (queued) return;
+
+      queued = true;
+
+      requestAnimationFrame(() => {
+        queued = false;
+        sync();
+      });
+    }
+
+    function onResize() {
+      measure();
+      onScroll();
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+
+    measure();
+    sync();
+
+    // Collapse the mobile disclosure once the reader has picked a section.
+    document
+      .querySelector<HTMLDetailsElement>("details[data-toc-details]")
+      ?.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+
+        if (target.closest("a[data-toc-link]")) {
+          (event.currentTarget as HTMLDetailsElement).open = false;
+        }
+      });
+  }
+</script>

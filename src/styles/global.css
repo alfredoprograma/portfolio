@@ -80,6 +80,19 @@
   --tw-prose-td-borders: var(--color-neutral-200);
 }
 
+/* Anchor jumps must clear the sticky navbar. Same intent as the homepage
+   sections' scroll-mt-[102px] sm:scroll-mt-16, derived from the token instead
+   of repeating the magic numbers. */
+.prose :is(h2, h3) {
+  scroll-margin-top: calc(var(--header-height) + 1.5rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 /* Code blocks in article prose.
    Deliberately unlayered: these have to win over the typography plugin's
    layered rules without resorting to !important. */
