@@ -10,6 +10,11 @@ type ExperienceCompany = {
 	roles: ExperienceRole[];
 };
 
+type Certification = {
+	name: string;
+	issuer: string;
+};
+
 export const SITE = {
 	meta: {
 		brand: "AlfredoPrograma",
@@ -88,6 +93,25 @@ export const SITE = {
 				],
 			},
 		] satisfies ExperienceCompany[],
+	},
+	certifications: {
+		title: "Certifications",
+		subtitle:
+			"Credentials backing the cloud, container and architecture side of the work",
+		items: [
+			{
+				name: "AWS Certified Solutions Architect – Associate",
+				issuer: "Amazon Web Services",
+			},
+			{
+				name: "Kubernetes and Cloud Native Associate",
+				issuer: "Cloud Native Computing Foundation",
+			},
+			{
+				name: "AWS Certified Cloud Practitioner",
+				issuer: "Amazon Web Services",
+			},
+		] satisfies Certification[],
 	},
 	blogList: {
 		title: "Blog",

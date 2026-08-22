@@ -1,0 +1,43 @@
+---
+import SectionHeading from "@components/Section/SectionHeading.astro";
+import type { SiteCopy } from "@data/copy";
+
+interface CertificationsProps {
+  copy: SiteCopy["certifications"];
+}
+
+type Props = CertificationsProps;
+
+const { copy } = Astro.props;
+---
+
+<section
+  id="certifications"
+  class="scroll-mt-[102px] sm:scroll-mt-16 bg-white border-b border-neutral-200 py-20 md:py-24 px-6"
+>
+  <div class="max-w-4xl mx-auto">
+    <SectionHeading
+      title={copy.title}
+      description={copy.subtitle}
+      class="mb-12 md:mb-16"
+    />
+
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        copy.items.map((item) => (
+          <li class="flex flex-col gap-3 border border-neutral-200 bg-neutral-50 p-6">
+            <span class="block size-[7px] bg-accent-600" />
+
+            <h3 class="font-display text-lg leading-[1.25] tracking-[-0.02em] font-semibold text-heading">
+              {item.name}
+            </h3>
+
+            <p class="mt-auto text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+              {item.issuer}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
