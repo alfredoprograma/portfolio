@@ -103,18 +103,24 @@ export const SITE = {
 		title: "Tech stack",
 		subtitle: "The tools I reach for across cloud, containers and delivery",
 		groups: [
-			{ label: "Cloud", items: ["AWS", "Microsoft Azure"] },
-			{ label: "Infrastructure as code", items: ["Terraform"] },
+			{
+				label: "Cloud",
+				items: ["AWS", "Microsoft Azure", "Google Cloud Platform"],
+			},
+			{ label: "Infrastructure as code", items: ["Terraform", "AWS CDK"] },
 			{
 				label: "Containers",
 				items: ["Docker", "Kubernetes", "Amazon ECS", "Amazon EKS"],
 			},
-			{ label: "CI/CD", items: ["GitHub Actions"] },
+			{
+				label: "CI/CD",
+				items: ["GitHub Actions", "Jenkins", "Bitbucket Pipelines"],
+			},
 			{
 				label: "Observability",
 				items: ["Amazon CloudWatch", "Grafana", "Prometheus"],
 			},
-			{ label: "Languages", items: ["Go", "TypeScript", "Bash"] },
+			{ label: "Languages", items: ["Go", "Python", "TypeScript", "Bash"] },
 		] satisfies TechGroup[],
 	},
 	certifications: {
