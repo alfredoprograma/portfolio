@@ -34,14 +34,6 @@ export function personSchema() {
         ...SITE.stack.groups.flatMap((group) => group.items),
       ])
     ),
-    homeLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: SITE.contact.availability.locality,
-        addressCountry: SITE.contact.availability.countryCode,
-      },
-    },
     hasCredential: SITE.certifications.items.map((item) => ({
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "certification",

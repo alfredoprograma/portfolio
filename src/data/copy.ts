@@ -168,14 +168,6 @@ export const SITE = {
 		emailIntro: "Or send me an email at",
 		emailLinkText: "alfredoprograma.dev@gmail.com",
 		resumeCta: "Download resume",
-		availability: {
-			locality: "Caracas",
-			country: "Venezuela",
-			/** ISO 3166-1 alpha-2, for the PostalAddress in the JSON-LD. */
-			countryCode: "VE",
-			timezone: "America/Caracas",
-			note: "Remote only, available for contract work worldwide",
-		},
 	},
 	post: {
 		backToBlog: "Back to blog",

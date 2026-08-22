@@ -21,9 +21,6 @@ interface ContactProps {
 type Props = ContactProps;
 
 const { copy, links } = Astro.props;
-
-const { locality, country, timezone, note } = copy.availability;
-const availability = `Based in ${locality}, ${country} (${timezone}) — ${note}`;
 ---
 
 <section
@@ -61,11 +58,6 @@ const availability = `Based in ${locality}, ${country} (${timezone}) — ${note}
       >
         {copy.emailLinkText}
       </a>
-    </p>
-
-    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 mt-5 text-[13px] text-muted">
-      <span class="block size-[5px] shrink-0 bg-accent-600"></span>
-      {availability}
     </p>
   </div>
 </section>
