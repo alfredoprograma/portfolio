@@ -34,6 +34,7 @@ export const SEO = {
     "DevOps",
     "AWS",
     "Amazon ECS",
+    "Microsoft Azure",
     "CI/CD",
     "GitHub Actions",
     "Docker",

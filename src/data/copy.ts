@@ -55,9 +55,9 @@ export const SITE = {
 						highlights: [
 							"Designed and provisioned a greenfield three-tier product on AWS with Terraform, replicated across development, staging and production. An ALB fronts ECS Fargate services running the frontend, API and asynchronous BullMQ workers from private subnets with NAT egress, while RDS Postgres and ElastiCache Redis sit in private isolated subnets and internal AWS traffic stays on VPC endpoints.",
 							"Eliminated static AWS credentials from CI by building a Github Actions pipeline on OIDC role assumption, scoped per repo and branch, that ships a merge to a running ECS task in around 8 minutes. Development and staging on merge, production gated behind a tagged release.",
-							"Built CloudWatch dashboards for a Django CMS platform covering ECS service CPU and task counts, ALB request volume and S3 with CloudFront transfer, and stood up Grafana backed by Prometheus for lower level time series metrics.",
-							"Hardened Debian and Ubuntu servers for production HTTP and HTTPS workloads, restricting SSH access, adding fail2ban for brute force mitigation, tuning an nginx reverse proxy and issuing TLS certificates through Let's Encrypt with certbot.",
 							"Established a site-to-site VPN linking AWS workloads to a client's on-premise Palo Alto firewall, then diagnosed a BGP session failure that left both tunnels up but no routes advertised, tracing it through the tunnel logs with the client's network team to correct the peering configuration on their side.",
+							"Provisioned Azure AI Foundry model deployments for AI backed application features, configuring each model and raising its assigned quota so serving throughput kept pace with what the applications demanded.",
+							"Hardened Debian and Ubuntu servers for production HTTP and HTTPS workloads, restricting SSH access, adding fail2ban for brute force mitigation, tuning an nginx reverse proxy and issuing TLS certificates through Let's Encrypt with certbot.",
 						],
 					},
 				],
