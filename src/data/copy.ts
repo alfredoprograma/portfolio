@@ -10,6 +10,11 @@ type ExperienceCompany = {
 	roles: ExperienceRole[];
 };
 
+type TechGroup = {
+	label: string;
+	items: string[];
+};
+
 type Certification = {
 	name: string;
 	issuer: string;
@@ -94,6 +99,28 @@ export const SITE = {
 			},
 		] satisfies ExperienceCompany[],
 	},
+	stack: {
+		title: "Tech stack",
+		subtitle: "The tools I reach for across cloud, delivery and the systems underneath",
+		groups: [
+			{ label: "Cloud", items: ["AWS", "Microsoft Azure"] },
+			{ label: "Infrastructure as code", items: ["Terraform"] },
+			{
+				label: "Containers",
+				items: ["Docker", "Kubernetes", "Amazon ECS", "Amazon EKS"],
+			},
+			{ label: "CI/CD", items: ["GitHub Actions"] },
+			{
+				label: "Observability",
+				items: ["Amazon CloudWatch", "Grafana", "Prometheus"],
+			},
+			{
+				label: "Linux",
+				items: ["Debian", "Ubuntu", "nginx", "fail2ban", "certbot"],
+			},
+			{ label: "Languages", items: ["Go", "TypeScript", "Bash"] },
+		] satisfies TechGroup[],
+	},
 	certifications: {
 		title: "Certifications",
 		subtitle:
@@ -139,6 +166,14 @@ export const SITE = {
 		emailIntro: "Or send me an email at",
 		emailLinkText: "alfredoprograma.dev@gmail.com",
 		resumeCta: "Download resume",
+		availability: {
+			locality: "Caracas",
+			country: "Venezuela",
+			/** ISO 3166-1 alpha-2, for the PostalAddress in the JSON-LD. */
+			countryCode: "VE",
+			timezone: "America/Caracas",
+			note: "Remote only, available for contract work worldwide",
+		},
 	},
 	post: {
 		backToBlog: "Back to blog",

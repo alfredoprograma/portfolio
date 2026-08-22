@@ -26,7 +26,22 @@ export function personSchema() {
     email: `mailto:${SEO.author.email}`,
     description: SEO.description,
     sameAs: SEO.author.sameAs,
-    knowsAbout: SEO.knowsAbout,
+    // Merged so the structured data always covers whatever the visible stack
+    // section lists; SEO.knowsAbout carries the broader concepts on top.
+    knowsAbout: Array.from(
+      new Set([
+        ...SEO.knowsAbout,
+        ...SITE.stack.groups.flatMap((group) => group.items),
+      ])
+    ),
+    homeLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: SITE.contact.availability.locality,
+        addressCountry: SITE.contact.availability.countryCode,
+      },
+    },
     hasCredential: SITE.certifications.items.map((item) => ({
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "certification",

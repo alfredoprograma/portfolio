@@ -3,6 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/Navbar/Navbar.astro";
 import Hero from "@components/Hero/Hero.astro";
 import Experience from "@components/Experience/Experience.astro";
+import Stack from "@components/Stack/Stack.astro";
 import Certifications from "@components/Certifications/Certifications.astro";
 import Contact from "@components/Contact/Contact.astro";
 import Footer from "@components/Footer/Footer.astro";
@@ -37,6 +38,7 @@ const contactLinks = [
   <Navbar />
   <Hero />
   <Experience copy={SITE.experience} />
+  <Stack copy={SITE.stack} />
   <Certifications copy={SITE.certifications} />
   <Contact copy={SITE.contact} links={contactLinks} />
   <Footer />
