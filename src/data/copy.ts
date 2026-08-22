@@ -34,7 +34,7 @@ export const SITE = {
 		name: "Alfredo Arvelaez",
 		role: "Cloud / DevOps Engineer",
 		description:
-			"Cloud / DevOps Engineer with nearly four years of experience operating cloud native systems in production. Specialized in multi-cloud architecture, mostly AWS across compute, networking and security with work in Azure too, orchestrating containerized workloads with Docker and Kubernetes, and the CI/CD automation that ships them.",
+			"Cloud / DevOps Engineer with nearly four years operating cloud native systems in production. Specialized in multi-cloud architecture, mostly AWS with work in Azure, containerized workloads with Docker and Kubernetes, and the CI/CD automation that ships them.",
 		cta: "Get in touch",
 		secondaryCta: "Read the blog",
 		currentlyLabel: "Currently",
