@@ -3,6 +3,7 @@ import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/Navbar/Navbar.astro";
 import Hero from "@components/Hero/Hero.astro";
 import Experience from "@components/Experience/Experience.astro";
+import Certifications from "@components/Certifications/Certifications.astro";
 import Contact from "@components/Contact/Contact.astro";
 import Footer from "@components/Footer/Footer.astro";
 import { SITE, SOCIAL_LINKS, RESUME_PATH } from "@data/copy";
@@ -36,6 +37,7 @@ const contactLinks = [
   <Navbar />
   <Hero />
   <Experience copy={SITE.experience} />
+  <Certifications copy={SITE.certifications} />
   <Contact copy={SITE.contact} links={contactLinks} />
   <Footer />
 </Layout>

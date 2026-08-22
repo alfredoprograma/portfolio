@@ -27,6 +27,15 @@ export function personSchema() {
     description: SEO.description,
     sameAs: SEO.author.sameAs,
     knowsAbout: SEO.knowsAbout,
+    hasCredential: SITE.certifications.items.map((item) => ({
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "certification",
+      name: item.name,
+      url: item.credentialUrl,
+      dateCreated: item.issuedOn,
+      expires: item.expiresOn,
+      recognizedBy: { "@type": "Organization", name: item.issuer },
+    })),
   };
 }
 
