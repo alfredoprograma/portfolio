@@ -20,7 +20,7 @@ export const BRAND_COLORS = {
 export const SEO = {
   /** ~155 chars so it survives a SERP without truncation. */
   description:
-    "Alfredo Arvelaez is a Cloud / DevOps engineer focused on cloud architecture, hands on AWS, Docker and Kubernetes, and CI/CD for web and backend platforms.",
+    "Alfredo Arvelaez is a Cloud / DevOps engineer focused on multi-cloud architecture on AWS and Azure, Docker and Kubernetes, and CI/CD for backend platforms.",
   locale: "en_US",
   themeColor: BRAND_COLORS.accent600,
   author: {
