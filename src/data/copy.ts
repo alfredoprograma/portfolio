@@ -25,7 +25,7 @@ export const SITE = {
 		name: "Alfredo Arvelaez",
 		role: "Cloud / DevOps Engineer",
 		description:
-			"Cloud / DevOps Engineer with over three years of experience operating cloud native systems in production. Specialized in CI/CD, containers, Linux, and AWS infrastructure for scalable web and backend platforms.",
+			"Cloud / DevOps Engineer with over three years of experience operating cloud native systems in production. Specialized in CI/CD, containers, Linux, and cloud infrastructure, most of it on AWS, for scalable web and backend platforms.",
 		cta: "Get in touch",
 		secondaryCta: "Read the blog",
 		currentlyLabel: "Currently",
@@ -34,7 +34,7 @@ export const SITE = {
 	experience: {
 		title: "Professional experience",
 		subtitle:
-			"Roles where I design, automate, and operate AWS infrastructure to keep dependable financial products running in production",
+			"Roles where I design, automate, and operate cloud infrastructure, mostly on AWS, to keep production systems reliable",
 		companies: [
 			{
 				company: "Magnet.cl",
@@ -62,7 +62,7 @@ export const SITE = {
 						period: "Feb 2022 — Oct 2022",
 						highlights: [
 							"Implemented an inventory management module within a web based ERP system, enhancing transaction traceability and stock control for over 150 products, improving operational efficiency and audit readiness.",
-							"Designed and built the backend of a personal finance management platform using Golang and PostgreSQL, implementing complex business logic and transaction processing, and supporting a React based frontend with reliable APIs for financial data analysis and reporting.",
+							"Designed and built the backend of a transaction heavy web platform using Golang and PostgreSQL, implementing complex business logic and transaction processing, and supporting a React based frontend with reliable APIs for data analysis and reporting.",
 						],
 					},
 				],
