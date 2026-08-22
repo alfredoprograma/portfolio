@@ -1,4 +1,5 @@
 ---
+import { cn } from "@utils/cn";
 import SectionHeading from "@components/Section/SectionHeading.astro";
 import type { SiteCopy } from "@data/copy";
 
@@ -22,29 +23,22 @@ const { copy } = Astro.props;
       class="mb-12 md:mb-16"
     />
 
-    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul>
       {
-        copy.groups.map((group) => (
-          <li class="flex flex-col gap-3 border border-neutral-200 bg-neutral-50 p-6">
-            <span class="block size-[7px] bg-accent-600" />
-
-            <h3 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted">
+        copy.groups.map((group, index) => (
+          <li
+            class={cn(
+              "grid gap-1.5 md:grid-cols-[168px_minmax(0,1fr)] md:gap-10 py-5 first:pt-0",
+              index > 0 && "border-t border-neutral-200"
+            )}
+          >
+            <h3 class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted md:pt-1">
               {group.label}
             </h3>
 
-            <ul class="flex flex-wrap gap-x-2 gap-y-1 text-[15px] leading-relaxed text-body">
-              {group.items.map((item, index) => (
-                <li>
-                  {item}
-                  {index < group.items.length - 1 && (
-                    <span class="text-neutral-300" aria-hidden="true">
-                      {" "}
-                      &middot;
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <p class="text-[15px] md:text-base leading-relaxed text-body">
+              {group.items.join(" · ")}
+            </p>
           </li>
         ))
       }

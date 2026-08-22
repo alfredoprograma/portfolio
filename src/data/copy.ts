@@ -101,7 +101,7 @@ export const SITE = {
 	},
 	stack: {
 		title: "Tech stack",
-		subtitle: "The tools I reach for across cloud, delivery and the systems underneath",
+		subtitle: "The tools I reach for across cloud, containers and delivery",
 		groups: [
 			{ label: "Cloud", items: ["AWS", "Microsoft Azure"] },
 			{ label: "Infrastructure as code", items: ["Terraform"] },
@@ -113,10 +113,6 @@ export const SITE = {
 			{
 				label: "Observability",
 				items: ["Amazon CloudWatch", "Grafana", "Prometheus"],
-			},
-			{
-				label: "Linux",
-				items: ["Debian", "Ubuntu", "nginx", "fail2ban", "certbot"],
 			},
 			{ label: "Languages", items: ["Go", "TypeScript", "Bash"] },
 		] satisfies TechGroup[],

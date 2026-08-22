@@ -53,11 +53,6 @@ const availability = `Based in ${locality}, ${country} (${timezone}) — ${note}
       }
     </div>
 
-    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 mb-5 text-[13px] text-muted">
-      <span class="block size-[5px] shrink-0 bg-accent-600"></span>
-      {availability}
-    </p>
-
     <p class="text-base leading-relaxed text-body">
       {copy.emailIntro}{" "}
       <a
@@ -66,6 +61,11 @@ const availability = `Based in ${locality}, ${country} (${timezone}) — ${note}
       >
         {copy.emailLinkText}
       </a>
+    </p>
+
+    <p class="flex flex-wrap items-center gap-x-2 gap-y-1 mt-5 text-[13px] text-muted">
+      <span class="block size-[5px] shrink-0 bg-accent-600"></span>
+      {availability}
     </p>
   </div>
 </section>
