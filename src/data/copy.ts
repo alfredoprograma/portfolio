@@ -53,7 +53,7 @@ export const SITE = {
 						role: "Cloud Engineer / DevOps",
 						period: "Oct 2022 — Present",
 						highlights: [
-							"Designed and provisioned a greenfield three-tier product on AWS with Terraform, structured as reusable child modules composed per environment over a bootstrapped S3 remote state. Frontend, API and asynchronous BullMQ workers run as ECS Fargate services behind an ALB with host-based routing, backed by RDS Postgres and ElastiCache Redis.",
+							"Designed and provisioned a greenfield three-tier product on AWS with Terraform, from the ALB down through ECS Fargate services for the frontend, API and asynchronous BullMQ workers, to RDS Postgres and ElastiCache Redis.",
 							"Organized workloads across an AWS Organizations multi-account layout, one account per client project, each with isolated VPCs per environment, databases in private isolated subnets, services in private subnets with NAT egress and internal AWS traffic kept on VPC endpoints.",
 							"Eliminated static AWS credentials from CI by building a Github Actions pipeline on OIDC role assumption, scoped per repo and branch, that ships a merge to a running ECS task in around 8 minutes. Development and staging on merge, production gated behind a tagged release.",
 							"Scoped least-privilege IAM policies per service and split them across ECS execution and task roles, keeping application secrets in Secrets Manager instead of baked into images or pipeline variables.",
