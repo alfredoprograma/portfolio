@@ -26,3 +26,16 @@ const monthYearFormatter = new Intl.DateTimeFormat(DATE_LOCALE, {
 export function formatMonthYear(month: string) {
   return monthYearFormatter.format(new Date(`${month}-01T00:00:00Z`));
 }
+
+// Whole months elapsed since a "YYYY-MM" month, so a tenure can be derived at
+// build time instead of being written into copy and going stale. Pinned to UTC
+// for the same reason as the formatters above.
+export function monthsSince(month: string) {
+  const start = new Date(`${month}-01T00:00:00Z`);
+  const now = new Date();
+
+  return (
+    (now.getUTCFullYear() - start.getUTCFullYear()) * 12 +
+    (now.getUTCMonth() - start.getUTCMonth())
+  );
+}

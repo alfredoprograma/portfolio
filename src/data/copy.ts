@@ -1,3 +1,5 @@
+import { monthsSince } from "@utils/date";
+
 type ExperienceRole = {
 	role: string;
 	period: string;
@@ -24,6 +26,39 @@ type Certification = {
 	credentialUrl: string;
 };
 
+/**
+ * First day of the first professional role (Ingeniust, Feb 2022). The hero
+ * tenure is derived from it at build time, so a rebuild keeps the claim honest
+ * instead of the sentence quietly going stale between deploys.
+ */
+const CAREER_START = "2022-02";
+
+const YEAR_WORDS = [
+	"zero",
+	"one",
+	"two",
+	"three",
+	"four",
+	"five",
+	"six",
+	"seven",
+	"eight",
+	"nine",
+	"ten",
+] as const;
+
+/**
+ * Completed years only, spelled out. "over" is dropped during the anniversary
+ * month so the claim is never a month ahead of the actual time served.
+ */
+function tenure(startMonth: string) {
+	const months = monthsSince(startMonth);
+	const years = Math.floor(months / 12);
+	const spelled = YEAR_WORDS[years] ?? String(years);
+
+	return months % 12 === 0 ? `${spelled} years` : `over ${spelled} years`;
+}
+
 export const SITE = {
 	meta: {
 		brand: "AlfredoPrograma",
@@ -38,8 +73,7 @@ export const SITE = {
 	hero: {
 		name: "Alfredo Arvelaez",
 		role: "Cloud / DevOps Engineer",
-		description:
-			"Cloud / DevOps Engineer with nearly four years operating cloud native systems in production. Specialized in multi-cloud architecture centered on AWS, containerized workloads with Docker and Kubernetes, and the CI/CD automation that ships them.",
+		description: `Cloud / DevOps Engineer with ${tenure(CAREER_START)} operating cloud native systems in production. Specialized in multi-cloud architecture centered on AWS, containerized workloads with Docker and Kubernetes, and the CI/CD automation that ships them.`,
 		cta: "Get in touch",
 		secondaryCta: "Read the blog",
 		currentlyLabel: "Currently",
