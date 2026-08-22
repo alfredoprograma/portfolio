@@ -107,11 +107,13 @@ export const SITE = {
 				period: "Feb 2022 — Oct 2022",
 				roles: [
 					{
-						role: "Full Stack Developer",
+						role: "Backend Engineer",
 						period: "Feb 2022 — Oct 2022",
 						highlights: [
-							"Implemented an inventory management module within a web based ERP system, enhancing transaction traceability and stock control for over 150 products, improving operational efficiency and audit readiness.",
-							"Designed and built the backend of a transaction heavy web platform using Golang and PostgreSQL, implementing complex business logic and transaction processing, and supporting a React based frontend with reliable APIs for data analysis and reporting.",
+							"Built the inventory module of a multi module ERP on NestJS and PostgreSQL, modeling stock movements as purchases from providers and sales to clients across a schema where products, providers and clients all referenced one another. Every movement that changed stock ran inside a database transaction, so a partial failure could not leave balances and the operations behind them disagreeing.",
+							"Standardized the NestJS API layer on Prisma with class validator DTOs at every endpoint, JWT authentication issued through Amazon Cognito for access and refresh tokens, and role based access control over a permission catalog generated from the ERP modules, which let administrators compose their own roles through the API on top of the default system ones. Every endpoint shipped an OpenAPI schema, served through Scalar.",
+							"Moved the slow work off the request path into Go services for background processing, mail dispatch and scraping, exchanging work with the ERP over Amazon SQS and RabbitMQ, with BullMQ on Redis carrying the job queues on the NestJS side. The scraper ran a pool of goroutines fanning out over channels to fetch and parse documents concurrently rather than one at a time.",
+							"Wrote those Go services on echo with sqlc generated queries and goose migrations, covered by table driven tests under testify. Packaged both stacks as multi stage Docker images so the shipped layer carried only the compiled binary or the production Node dependencies, with docker compose standing up PostgreSQL and Redis to run the whole ERP locally.",
 						],
 					},
 				],
@@ -124,9 +126,8 @@ export const SITE = {
 						role: "Software Development Tutor",
 						period: "Oct 2021 — Feb 2022",
 						highlights: [
-							"Prepared over 30 students for online university projects and exams, resulting in improved academic performance and successful course completion.",
-							"Mentored junior and inexperienced developers by resolving technical questions and accelerating their learning and problem solving skills.",
-							"Earned 40 top rated reviews on the platform, demonstrating consistently high learner satisfaction and teaching effectiveness.",
+							"Tutored over 30 university students through software development coursework, projects and exams, working through their technical questions session by session.",
+							"Finished the engagement with 40 top rated reviews on the platform.",
 						],
 					},
 				],
@@ -135,7 +136,8 @@ export const SITE = {
 	},
 	stack: {
 		title: "Tech stack",
-		subtitle: "The tools I reach for across cloud, containers and delivery",
+		subtitle:
+			"The tools I reach for across cloud, containers, backend services and delivery",
 		groups: [
 			{
 				label: "Cloud",
@@ -153,6 +155,19 @@ export const SITE = {
 			{
 				label: "Observability",
 				items: ["Amazon CloudWatch", "Grafana", "Prometheus"],
+			},
+			{
+				label: "Backend",
+				items: [
+					"NestJS",
+					"Node.js",
+					"REST APIs",
+					"PostgreSQL",
+					"Prisma",
+					"Redis",
+					"Amazon SQS",
+					"RabbitMQ",
+				],
 			},
 			{ label: "Languages", items: ["Go", "Python", "TypeScript", "Bash"] },
 		] satisfies TechGroup[],
