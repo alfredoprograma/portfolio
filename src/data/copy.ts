@@ -34,7 +34,7 @@ export const SITE = {
 	experience: {
 		title: "Professional experience",
 		subtitle:
-			"Roles where I blend frontend craftsmanship, backend systems, and AWS to launch dependable financial products",
+			"Roles where I design, automate, and operate AWS infrastructure to keep dependable financial products running in production",
 		companies: [
 			{
 				company: "Magnet.cl",
@@ -42,21 +42,13 @@ export const SITE = {
 				roles: [
 					{
 						role: "Cloud Engineer / DevOps",
-						period: "Nov 2023 — Present",
+						period: "Oct 2022 — Present",
 						highlights: [
 							"Designed and provisioned greenfield three-tier product on AWS with Terraform. Frontend, API and asynchronous workers run as ECS Fargate services behind an ALB with host-based routing, backed by RDS and ElasticCache.",
 							"Provisioned an isolated VPC and networking components across development, staging and production environments, with databases in private isolated subnets and services in private subnets with NAT egress.",
 							"Eliminated static AWS credentials from CI by building a Github Actions pipeline on OIDC role assumption, scoped per repo and branch, that ships a merge to a running ECS task in around 8 minutes. Development and staging on merge, production gated behind a tagged release.",
 							"Established a site-to-site VPN linking AWS workloads to a client's on-premise Palo Alto firewall, configuring the customer gateway, virtual private gateway, route tables and tunnels to their network team's specification so an EC2 hosted API could reach an internal service behind their perimeter.",
 							"Diagnosed a BGP session failure that left both tunnels up but no routes advertised, tracing it through the tunnel logs and working with the client's network team to correct the peering configuration on their side."
-						],
-					},
-					{
-						role: "Full Stack Developer",
-						period: "Oct 2022 — Nov 2023",
-						highlights: [
-							"Designed and supported a web based insurance simulator by exposing backend services and APIs that enabled profitability projections across multiple insurance products, collaborating with product teams to align system behavior with business requirements.",
-							"Contributed to the development of a product recommendation engine for retail banking users by implementing backend logic and data integrations to match customers with relevant financial products, enhancing customer personalization and platform engagement.",
 						],
 					},
 				],
