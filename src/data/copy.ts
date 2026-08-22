@@ -13,6 +13,10 @@ type ExperienceCompany = {
 type Certification = {
 	name: string;
 	issuer: string;
+	/** Month precision ("YYYY-MM") — that is all the issuers record. */
+	issuedOn: string;
+	expiresOn: string;
+	credentialUrl: string;
 };
 
 export const SITE = {
@@ -97,19 +101,31 @@ export const SITE = {
 	certifications: {
 		title: "Certifications",
 		subtitle:
-			"Credentials backing the cloud, container and architecture side of the work",
+			"Credentials backing the cloud, container and architecture side of the work, each verifiable on Credly",
 		items: [
 			{
 				name: "AWS Certified Solutions Architect – Associate",
 				issuer: "Amazon Web Services",
+				issuedOn: "2025-07",
+				expiresOn: "2028-07",
+				credentialUrl:
+					"https://www.credly.com/earner/earned/badge/a12940cc-dce7-47e2-b848-03685198971e",
 			},
 			{
-				name: "Kubernetes and Cloud Native Associate",
+				name: "Kubernetes and Cloud Native Associate (KCNA)",
 				issuer: "Cloud Native Computing Foundation",
+				issuedOn: "2025-09",
+				expiresOn: "2027-09",
+				credentialUrl:
+					"https://www.credly.com/earner/earned/badge/06999c67-c051-4158-9fda-afbcc7a7eabb",
 			},
 			{
 				name: "AWS Certified Cloud Practitioner",
 				issuer: "Amazon Web Services",
+				issuedOn: "2025-01",
+				expiresOn: "2028-07",
+				credentialUrl:
+					"https://www.credly.com/earner/earned/badge/d656d1c7-6bd7-4c64-9597-528a84993349",
 			},
 		] satisfies Certification[],
 	},

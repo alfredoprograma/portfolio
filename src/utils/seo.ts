@@ -31,6 +31,9 @@ export function personSchema() {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "certification",
       name: item.name,
+      url: item.credentialUrl,
+      dateCreated: item.issuedOn,
+      expires: item.expiresOn,
       recognizedBy: { "@type": "Organization", name: item.issuer },
     })),
   };
