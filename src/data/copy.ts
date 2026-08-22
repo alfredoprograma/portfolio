@@ -53,10 +53,11 @@ export const SITE = {
 						role: "Cloud Engineer / DevOps",
 						period: "Oct 2022 — Present",
 						highlights: [
-							"Designed and provisioned a greenfield three-tier product on AWS with Terraform, replicated across development, staging and production. An ALB fronts ECS Fargate services running the frontend, API and asynchronous BullMQ workers from private subnets with NAT egress, while RDS Postgres and ElastiCache Redis sit in private isolated subnets and internal AWS traffic stays on VPC endpoints.",
-							"Eliminated static AWS credentials from CI by building a Github Actions pipeline on OIDC role assumption, scoped per repo and branch, that ships a merge to a running ECS task in around 8 minutes. Development and staging on merge, production gated behind a tagged release.",
-							"Established a site-to-site VPN linking AWS workloads to a client's on-premise Palo Alto firewall, then diagnosed a BGP session failure that left both tunnels up but no routes advertised, tracing it through the tunnel logs with the client's network team to correct the peering configuration on their side.",
-							"Provisioned Azure AI Foundry model deployments for AI backed application features, standing up DeepSeek V4 Flash and Pro alongside GPT-4.1 nano, configuring each model and raising its assigned quota so serving throughput kept pace with what the applications demanded.",
+							"Designed a greenfield three-tier product on AWS, provisioned with Terraform across development, staging and production: frontend, API and asynchronous BullMQ workers as ECS Fargate services behind an ALB, backed by RDS Postgres and ElastiCache Redis.",
+							"Isolated the network per environment, with services in private subnets reaching out through NAT egress, RDS Postgres and ElastiCache Redis held in private isolated subnets, and internal AWS traffic kept on VPC endpoints.",
+							"Established a site-to-site VPN linking AWS workloads to a client's on-premises Palo Alto firewall, then diagnosed a BGP session failure that left both tunnels up but no routes advertised, tracing it through the tunnel logs with the client's network team to correct the peering configuration on their side.",
+							"Eliminated static AWS credentials from CI by building a GitHub Actions pipeline on OIDC role assumption, scoped per repo and branch, that ships a merge to a running ECS task in around 8 minutes. Development and staging on merge, production gated behind a tagged release.",
+							"Provisioned Azure AI Foundry model deployments for AI backed application features, standing up both DeepSeek and GPT family models, configuring each deployment and raising its assigned quota so serving throughput kept pace with what the applications demanded.",
 							"Hardened Debian and Ubuntu servers for production HTTP and HTTPS workloads, restricting SSH access, adding fail2ban for brute force mitigation, tuning an nginx reverse proxy and issuing TLS certificates through Let's Encrypt with certbot.",
 						],
 					},
@@ -149,7 +150,7 @@ export type SiteCopy = typeof SITE;
 
 export const SOCIAL_LINKS = [
 	{ href: "https://www.linkedin.com/in/alfredoprograma/", text: "LinkedIn" },
-	{ href: "https://github.com/AlfredoPrograma", text: "Github" },
+	{ href: "https://github.com/AlfredoPrograma", text: "GitHub" },
 ] as const;
 
 export const RESUME_PATH = "/Alfredo-Arvelaez-CV.pdf";
