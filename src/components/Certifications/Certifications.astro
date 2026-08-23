@@ -1,6 +1,5 @@
 ---
 import SectionHeading from "@components/Section/SectionHeading.astro";
-import Icon from "@components/Icon/Icon.astro";
 import { formatMonthYear } from "@utils/date";
 import type { SiteCopy } from "@data/copy";
 
@@ -38,13 +37,8 @@ const { copy } = Astro.props;
 
               <span class="block size-[7px] bg-accent-600" />
 
-              <h3 class="flex items-start gap-1.5 font-display text-lg leading-[1.25] tracking-[-0.02em] font-semibold text-heading transition-colors group-hover:text-accent-700">
+              <h3 class="font-display text-lg leading-[1.25] tracking-[-0.02em] font-semibold text-heading transition-colors group-hover:text-accent-700">
                 {item.name}
-                <Icon
-                  name="arrow-up-right"
-                  size={14}
-                  class="mt-1.5 shrink-0 text-muted transition-all duration-200 group-hover:text-accent-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
               </h3>
 
               <p class="text-[13px] leading-relaxed text-body">
