@@ -25,13 +25,14 @@ const { copy, links } = Astro.props;
 
 <section
   id="contact"
-  class="scroll-mt-[102px] sm:scroll-mt-16 bg-white py-20 md:py-24 px-6"
+  class="scroll-mt-[102px] sm:scroll-mt-16 surface-ink bg-ink-950 py-20 md:py-24 px-6"
 >
   <div class="max-w-4xl mx-auto">
     <SectionHeading
       title={copy.title}
       description={copy.description}
       headingClass="text-[32px] md:text-[44px] leading-[1.08]"
+      ruleClass="bg-accent-500"
     />
 
     <div class="flex flex-col sm:flex-row flex-wrap gap-3 mt-9 mb-8">
@@ -41,7 +42,7 @@ const { copy, links } = Astro.props;
             href={href}
             download={download}
             size="lg"
-            variant={featured ? "fill" : "outline"}
+            variant={featured ? "fill" : "inverse"}
           >
             {text}
             {icon && <Icon name={icon} size={15} />}
@@ -54,7 +55,7 @@ const { copy, links } = Astro.props;
       {copy.emailIntro}{" "}
       <a
         href={`mailto:${copy.emailLinkText}`}
-        class="font-medium text-accent-700 underline-offset-[3px] hover:underline hover:text-accent-900 transition-colors"
+        class="font-medium text-accent-300 underline-offset-[3px] hover:underline hover:text-accent-200 transition-colors"
       >
         {copy.emailLinkText}
       </a>

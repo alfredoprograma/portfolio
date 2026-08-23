@@ -9,12 +9,12 @@ const footerLinks = [
 ];
 ---
 
-<footer class="bg-neutral-50 border-t border-neutral-200 px-6 py-8">
+<footer class="surface-ink bg-ink-950 border-t border-ink-900 px-6 py-8">
   <div
     class="max-w-4xl mx-auto flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-4"
   >
     <div class="flex items-center gap-2.5">
-      <span class="block size-[7px] bg-accent-600"></span>
+      <span class="block size-[7px] bg-accent-500"></span>
       <p class="text-[13px] text-muted">&copy; {year} {SITE.hero.name}</p>
     </div>
 
@@ -23,7 +23,7 @@ const footerLinks = [
         footerLinks.map(({ href, text }) => (
           <a
             href={href}
-            class="text-muted hover:text-accent-700 transition-colors"
+            class="text-muted hover:text-heading transition-colors"
           >
             {text}
           </a>

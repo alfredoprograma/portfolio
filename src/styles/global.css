@@ -9,10 +9,17 @@
   --color-accent-50: oklch(0.975 0.012 152);
   --color-accent-100: oklch(0.94 0.03 152);
   --color-accent-200: oklch(0.88 0.06 152);
+  --color-accent-300: oklch(0.75 0.09 152);
   --color-accent-500: oklch(0.55 0.12 152);
   --color-accent-600: oklch(0.48 0.12 152);
   --color-accent-700: oklch(0.4 0.1 152);
   --color-accent-900: oklch(0.28 0.065 152);
+
+  /* Ground for the closing slab. Near-black, biased toward the accent hue so
+     it sits under the greens instead of reading as a separate palette. */
+  --color-ink-800: oklch(0.35 0.015 152);
+  --color-ink-900: oklch(0.27 0.015 152);
+  --color-ink-950: oklch(0.17 0.012 152);
 }
 
 @layer base {
@@ -26,6 +33,16 @@
     --text-body: var(--color-neutral-700);
     --text-muted: var(--color-neutral-500);
     --text-accent: var(--color-accent-700);
+  }
+
+  /* Inverted token set for the dark closing slab (contact + footer). The
+     shared components inside keep their .text-heading / .text-body /
+     .text-muted classes and resolve against these instead. */
+  .surface-ink {
+    --text-heading: #fff;
+    --text-body: oklch(0.79 0.012 152);
+    --text-muted: oklch(0.62 0.012 152);
+    --text-accent: var(--color-accent-300);
   }
 
   @media (width >= 40rem) {

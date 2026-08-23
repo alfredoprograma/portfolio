@@ -1,7 +1,7 @@
 ---
 import { cn } from "@utils/cn";
 
-type ButtonVariant = "fill" | "outline";
+type ButtonVariant = "fill" | "outline" | "inverse";
 type ButtonSize = "sm" | "lg";
 
 interface ButtonLinkProps {
@@ -32,6 +32,8 @@ const {
       "bg-accent-600 text-white hover:bg-accent-700": variant === "fill",
       "bg-white border border-neutral-300 text-body hover:border-accent-600 hover:text-accent-700 hover:bg-accent-50":
         variant === "outline",
+      "bg-transparent border border-ink-800 text-white hover:border-accent-500 hover:bg-white/5":
+        variant === "inverse",
       "min-h-10 px-4 text-sm": size === "sm",
       "min-h-12 px-[26px] text-[15px]": size === "lg",
     },
