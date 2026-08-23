@@ -5,7 +5,7 @@ interface SectionHeadingProps {
   title: string;
   description?: string;
   as?: "h1" | "h2";
-  /** Type scale for the heading; defaults to the 40px section size. */
+  /** Type scale for the heading; defaults to the 46px section size. */
   headingClass?: string;
   /** Accent rule colour; lightened on dark surfaces for legibility. */
   ruleClass?: string;
@@ -18,7 +18,7 @@ const {
   title,
   description,
   as: Tag = "h2",
-  headingClass = "text-3xl md:text-[40px] leading-[1.12]",
+  headingClass = "text-[34px] md:text-[46px] leading-[1.1]",
   ruleClass = "bg-accent-600",
   class: className,
 } = Astro.props;

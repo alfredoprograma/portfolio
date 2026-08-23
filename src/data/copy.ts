@@ -81,8 +81,6 @@ export const SITE = {
 	},
 	experience: {
 		title: "Professional experience",
-		subtitle:
-			"Roles where I design, automate, and operate cloud infrastructure, mostly on AWS, to keep production systems reliable",
 		companies: [
 			{
 				company: "Magnet.cl",
@@ -132,8 +130,6 @@ export const SITE = {
 	},
 	stack: {
 		title: "Tech stack",
-		subtitle:
-			"The tools I reach for across cloud, containers, backend services and delivery",
 		groups: [
 			{
 				label: "Cloud",
@@ -170,8 +166,6 @@ export const SITE = {
 	},
 	certifications: {
 		title: "Certifications",
-		subtitle:
-			"Credentials backing the cloud, container and architecture side of the work",
 		viewCredential: "View credential",
 		items: [
 			{
