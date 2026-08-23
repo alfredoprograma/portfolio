@@ -92,10 +92,10 @@ export const SITE = {
 						role: "Cloud Engineer / DevOps",
 						period: "Oct 2022 — Present",
 						highlights: [
-							"Designed and shipped a greenfield three-tier product on AWS: ECS Fargate services behind an ALB, RDS Postgres and ElastiCache Redis, provisioned with Terraform across development, staging and production.",
-							"Eliminated static AWS credentials from CI with OIDC role assumption in GitHub Actions, shipping a merge to a running ECS task in around 8 minutes, production gated behind a tagged release.",
-							"Isolated each environment's network: services in private subnets with NAT egress, datastores in private isolated subnets, internal AWS traffic kept on VPC endpoints.",
-							"Diagnosed a site-to-site VPN failure against a client's on-premises Palo Alto firewall: both tunnels up, no routes advertised over BGP, traced through tunnel logs to a peering misconfiguration on their side.",
+							"Designed and shipped a greenfield three-tier product on AWS, running services on ECS Fargate behind an ALB with RDS Postgres and ElastiCache Redis, provisioned through Terraform across development, staging and production.",
+							"Eliminated static AWS credentials from CI by moving GitHub Actions onto OIDC role assumption, which ships a merge to a running ECS task in around 8 minutes, with production gated behind a tagged release.",
+							"Isolated each environment's network by keeping services in private subnets with NAT egress, datastores in private isolated subnets, and internal AWS traffic on VPC endpoints.",
+							"Diagnosed a site-to-site VPN failure at a client's on-premises Palo Alto firewall, where both tunnels stayed up while BGP advertised no routes, then traced the tunnel logs to a peering misconfiguration on their side.",
 							"Provisioned Azure AI Foundry model deployments and raised their assigned quota to match application serving demand.",
 						],
 					},
@@ -109,7 +109,7 @@ export const SITE = {
 						role: "Backend Engineer",
 						period: "Feb 2022 — Oct 2022",
 						highlights: [
-							"Built the ERP inventory module on NestJS and PostgreSQL: stock movements in database transactions, JWT auth through Amazon Cognito, role based access control over a permission catalog generated from the ERP modules.",
+							"Built the ERP inventory module on NestJS and PostgreSQL, wrapping stock movements in database transactions, authenticating through Cognito issued JWTs and layering role based access control over a permission catalog generated from the ERP modules.",
 							"Moved background processing, mail dispatch and scraping off the request path into Go services consuming Amazon SQS, shipped as multi stage Docker images.",
 						],
 					},
@@ -172,6 +172,7 @@ export const SITE = {
 		title: "Certifications",
 		subtitle:
 			"Credentials backing the cloud, container and architecture side of the work",
+		viewCredential: "View credential",
 		items: [
 			{
 				name: "AWS Certified Cloud Practitioner",
