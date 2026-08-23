@@ -1,0 +1,285 @@
+---
+import Icon from "@components/Icon/Icon.astro";
+import { SITE } from "@data/copy";
+
+interface ArticleFiltersProps {
+  /** Every tag in the collection, already sorted, with its article count. */
+  tags: { name: string; count: number }[];
+  total: number;
+}
+
+type Props = ArticleFiltersProps;
+
+const { tags, total } = Astro.props;
+
+const copy = SITE.blogList.filters;
+
+const chipClass =
+  "group inline-flex cursor-pointer items-center gap-[7px] rounded-xs border px-2.5 py-[5px] text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors border-neutral-200 bg-white text-muted hover:border-neutral-300 hover:text-heading aria-pressed:border-accent-600 aria-pressed:bg-accent-600 aria-pressed:text-white disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-neutral-200 disabled:hover:text-muted focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent-600";
+
+const dotClass =
+  "block size-1 bg-accent-600 transition-colors group-aria-pressed:bg-white group-disabled:bg-neutral-300";
+
+const countClass = "tabular-nums text-[10px] font-medium opacity-60";
+---
+
+{/* Removed by the inline script below, so the bar never renders without the
+    behaviour that makes it work. The list itself stays fully server-rendered. */}
+<div data-filters hidden class="mb-8 flex flex-col gap-5">
+  <search>
+    <div class="relative">
+      <label class="sr-only" for="article-search">{copy.searchLabel}</label>
+
+      <Icon
+        name="search"
+        size={17}
+        class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted"
+      />
+
+      <input
+        id="article-search"
+        data-search-input
+        type="search"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder={copy.searchPlaceholder}
+        class="w-full appearance-none rounded-xs border border-neutral-200 bg-white py-3 pl-11 pr-11 text-[15px] text-heading transition-colors placeholder:text-muted hover:border-neutral-300 focus:border-accent-600 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+      />
+
+      <button
+        type="button"
+        data-search-clear
+        hidden
+        aria-label={copy.clearSearch}
+        class="absolute right-3 top-1/2 flex size-7 -translate-y-1/2 cursor-pointer items-center justify-center rounded-xs text-muted transition-colors hover:bg-neutral-100 hover:text-heading focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-600"
+      >
+        <Icon name="close" size={14} />
+      </button>
+    </div>
+  </search>
+
+  <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+    <span
+      id="topic-filters-label"
+      class="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted"
+    >
+      {copy.topicsLabel}
+    </span>
+
+    <div
+      role="group"
+      aria-labelledby="topic-filters-label"
+      class="flex flex-wrap gap-2"
+    >
+      <button type="button" data-tag-filter="" aria-pressed="true" class={chipClass}>
+        <span class={dotClass}></span>
+        {copy.allTopics}
+        <span class={countClass} data-tag-count>{total}</span>
+      </button>
+
+      {
+        tags.map((tag) => (
+          <button
+            type="button"
+            data-tag-filter={tag.name.toLowerCase()}
+            aria-pressed="false"
+            class={chipClass}
+          >
+            <span class={dotClass} />
+            {tag.name}
+            <span class={countClass} data-tag-count>
+              {tag.count}
+            </span>
+          </button>
+        ))
+      }
+    </div>
+
+    <button
+      type="button"
+      data-clear-filters
+      hidden
+      class="cursor-pointer text-[11px] font-semibold uppercase tracking-[0.08em] text-accent-700 underline underline-offset-4 transition-colors hover:text-accent-900 focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent-600"
+    >
+      {copy.clearFilters}
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  // Blocking on purpose: it flips the bar visible while the parser is still on
+  // this node, so there is no flash of an unfiltered layout, and no bar at all
+  // when scripting is off.
+  document.currentScript.previousElementSibling.hidden = false;
+</script>
+
+<script>
+  const filters = document.querySelector<HTMLElement>("[data-filters]");
+  const input = document.querySelector<HTMLInputElement>("[data-search-input]");
+  const searchClear = document.querySelector<HTMLButtonElement>(
+    "[data-search-clear]"
+  );
+  const tagButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-tag-filter]")
+  );
+  const articles = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-article]")
+  );
+  const empty = document.querySelector<HTMLElement>("[data-empty]");
+  const count = document.querySelector<HTMLElement>("[data-result-count]");
+  const countLabel = document.querySelector<HTMLElement>("[data-result-label]");
+  const clearButtons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>("[data-clear-filters]")
+  );
+
+  if (filters && input && searchClear && articles.length > 0) {
+    const known = new Set(
+      tagButtons.map((button) => button.dataset.tagFilter!).filter(Boolean)
+    );
+
+    const selected = new Set<string>();
+    let terms: string[] = [];
+
+    const tagsOf = (article: HTMLElement) =>
+      (article.dataset.tags ?? "").split(",").filter(Boolean);
+
+    // Every term has to hit, so "kafka go" narrows rather than widens.
+    const matchesQuery = (article: HTMLElement) =>
+      terms.every((term) => (article.dataset.search ?? "").includes(term));
+
+    const matchesTags = (article: HTMLElement) =>
+      selected.size === 0 || tagsOf(article).some((tag) => selected.has(tag));
+
+    function readQuery() {
+      terms = input!.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    }
+
+    /** Mirror the state into the URL so a filtered view can be shared. */
+    function syncUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const query = input!.value.trim();
+
+      query ? params.set("q", query) : params.delete("q");
+
+      selected.size
+        ? params.set("tags", Array.from(selected).join(","))
+        : params.delete("tags");
+
+      const search = params.toString();
+
+      history.replaceState(
+        null,
+        "",
+        search
+          ? `${window.location.pathname}?${search}`
+          : window.location.pathname
+      );
+    }
+
+    function render() {
+      let visible = 0;
+
+      for (const article of articles) {
+        const show = matchesQuery(article) && matchesTags(article);
+
+        article.hidden = !show;
+
+        if (show) visible += 1;
+      }
+
+      // Counts follow the search box but ignore the tag selection: they answer
+      // "what would this topic give me", which is what the next click asks.
+      const searchable = articles.filter(matchesQuery);
+
+      for (const button of tagButtons) {
+        const tag = button.dataset.tagFilter!;
+        const active = tag ? selected.has(tag) : selected.size === 0;
+        const matching = tag
+          ? searchable.filter((article) => tagsOf(article).includes(tag)).length
+          : searchable.length;
+
+        button.setAttribute("aria-pressed", String(active));
+        button.disabled = matching === 0 && !active;
+
+        const badge = button.querySelector<HTMLElement>("[data-tag-count]");
+
+        if (badge) badge.textContent = String(matching);
+      }
+
+      const filtering = terms.length > 0 || selected.size > 0;
+
+      if (count) count.textContent = String(visible);
+
+      if (countLabel) {
+        countLabel.textContent =
+          visible === 1
+            ? countLabel.dataset.labelSingular!
+            : countLabel.dataset.labelPlural!;
+      }
+
+      if (empty) empty.hidden = visible > 0;
+
+      searchClear!.hidden = input!.value === "";
+
+      for (const button of clearButtons) button.hidden = !filtering;
+    }
+
+    function update() {
+      readQuery();
+      render();
+      syncUrl();
+    }
+
+    // Restore a shared or reloaded view before the first paint of the results.
+    const params = new URLSearchParams(window.location.search);
+
+    input.value = params.get("q") ?? "";
+
+    for (const tag of (params.get("tags") ?? "").split(",")) {
+      const normalized = tag.trim().toLowerCase();
+
+      if (known.has(normalized)) selected.add(normalized);
+    }
+
+    update();
+
+    input.addEventListener("input", update);
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && input.value !== "") {
+        input.value = "";
+        update();
+      }
+    });
+
+    searchClear.addEventListener("click", () => {
+      input.value = "";
+      input.focus();
+      update();
+    });
+
+    for (const button of tagButtons) {
+      button.addEventListener("click", () => {
+        const tag = button.dataset.tagFilter!;
+
+        if (!tag) {
+          selected.clear();
+        } else if (selected.has(tag)) {
+          selected.delete(tag);
+        } else {
+          selected.add(tag);
+        }
+
+        update();
+      });
+    }
+
+    for (const button of clearButtons) {
+      button.addEventListener("click", () => {
+        input.value = "";
+        selected.clear();
+        update();
+      });
+    }
+  }
+</script>

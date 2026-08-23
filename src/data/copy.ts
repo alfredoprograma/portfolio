@@ -190,7 +190,19 @@ export const SITE = {
 		description:
 			"Thoughts on development, cloud design, and the ever-evolving backend, infrastructure and devops topics",
 		articlesCount: "articles",
+		articleCount: "article",
 		readArticle: "Read article",
+		filters: {
+			searchLabel: "Search articles",
+			searchPlaceholder: "Search by title, summary or topic",
+			clearSearch: "Clear search",
+			topicsLabel: "Topics",
+			allTopics: "All",
+			clearFilters: "Clear filters",
+			emptyTitle: "Nothing matches those filters",
+			emptyDescription:
+				"Try a broader search term, or clear the filters to see every article.",
+		},
 	},
 	contact: {
 		title: "Let's work together",

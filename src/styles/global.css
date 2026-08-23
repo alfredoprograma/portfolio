@@ -23,6 +23,12 @@
 }
 
 @layer base {
+  /* The blog filters toggle elements through the `hidden` attribute, and some
+     of them carry a display utility that would otherwise outrank the UA rule. */
+  [hidden] {
+    display: none !important;
+  }
+
   :root {
     /* Height of the sticky header, used by the hero to fill the rest of the
        viewport. Keep in sync with Navbar.astro: 56px bar + 46px mobile link
