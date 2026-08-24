@@ -188,7 +188,7 @@ export const SITE = {
 	blogList: {
 		title: "Blog",
 		description:
-			"Thoughts on development, cloud design, and the ever-evolving backend, infrastructure and devops topics",
+			"Field notes on cloud infrastructure, containers and Kubernetes, CI/CD, and the DevOps practice behind them",
 		articlesCount: "articles",
 		readArticle: "Read article",
 	},
@@ -203,6 +203,10 @@ export const SITE = {
 	post: {
 		backToBlog: "Back to blog",
 		onThisPage: "On this page",
+		related: {
+			title: "Related articles",
+			readArticle: "Read article",
+		},
 	},
 } as const;
 

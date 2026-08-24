@@ -4,6 +4,7 @@ import Navbar from "@components/Navbar/Navbar.astro";
 import Footer from "@components/Footer/Footer.astro";
 import Prose from "@components/Blog/Prose.astro";
 import TableOfContents from "@components/Blog/TableOfContents.astro";
+import RelatedArticles from "@components/Blog/RelatedArticles.astro";
 import Chip from "@components/Chip/Chip.astro";
 import ButtonLink from "@components/Button/ButtonLink.astro";
 import Icon from "@components/Icon/Icon.astro";
@@ -94,6 +95,8 @@ const jsonLd = graph(
         <Prose>
           <Content />
         </Prose>
+
+        <RelatedArticles article={article} />
 
         <div class="mt-14 pt-8 border-t border-neutral-200">
           <ButtonLink href="/blog" variant="outline" size="lg">
