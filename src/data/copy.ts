@@ -95,6 +95,7 @@ export const SITE = {
 							"Isolated each environment's network by keeping services in private subnets with NAT egress, datastores in private isolated subnets, and internal AWS traffic on VPC endpoints.",
 							"Diagnosed a site-to-site VPN failure at a client's on-premises Palo Alto firewall, where both tunnels stayed up while BGP advertised no routes, then traced the tunnel logs to a peering misconfiguration on their side.",
 							"Provisioned Azure AI Foundry model deployments and raised their assigned quota to match application serving demand.",
+							"Hardened Debian and Ubuntu servers for production HTTP and HTTPS workloads, restricting SSH access, adding fail2ban for brute force mitigation, tuning an nginx reverse proxy and issuing TLS certificates through Let's Encrypt with certbot.",
 						],
 					},
 				],
