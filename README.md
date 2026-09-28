@@ -23,7 +23,6 @@ My work blends clean code practices, agile collaboration, and a strong focus on 
 - AWS Solutions Architect Associate (2025–2028)  
 - Kubernetes and Cloud Native Associate (2025–2028)  
 - Certified Kubernetes Administrator (2026–2028)  
-- EF SET English Certificate — C2 Proficient  
 
 ---
 
