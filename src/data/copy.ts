@@ -177,7 +177,7 @@ export const SITE = {
 			},
 			{
 				name: "Kubernetes and Cloud Native Associate (KCNA)",
-				issuer: "Cloud Native Computing Foundation",
+				issuer: "The Linux Foundation",
 				issuedOn: "2025-09",
 				expiresOn: "2028-09",
 				credentialUrl:
@@ -185,7 +185,7 @@ export const SITE = {
 			},
 			{
 				name: "Certified Kubernetes Administrator (CKA)",
-				issuer: "Cloud Native Computing Foundation",
+				issuer: "The Linux Foundation",
 				issuedOn: "2026-09",
 				expiresOn: "2028-09",
 				credentialUrl:
