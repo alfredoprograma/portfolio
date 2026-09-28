@@ -179,9 +179,17 @@ export const SITE = {
 				name: "Kubernetes and Cloud Native Associate (KCNA)",
 				issuer: "Cloud Native Computing Foundation",
 				issuedOn: "2025-09",
-				expiresOn: "2027-09",
+				expiresOn: "2028-09",
 				credentialUrl:
-					"https://www.credly.com/badges/06999c67-c051-4158-9fda-afbcc7a7eabb/public_url",
+					"https://www.credly.com/badges/0c0a73db-3b03-4ca9-be49-4ca2f4eb1f88/public_url",
+			},
+			{
+				name: "Certified Kubernetes Administrator (CKA)",
+				issuer: "Cloud Native Computing Foundation",
+				issuedOn: "2026-09",
+				expiresOn: "2028-09",
+				credentialUrl:
+					"https://www.credly.com/badges/bac3b10b-1d4e-4013-9d2a-fc244826ce26/public_url",
 			},
 		] satisfies Certification[],
 	},
